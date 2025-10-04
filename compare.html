@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Stablecoins - StablecoinHub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <h1>StablecoinHub</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Blog</a></li>
+                    <li><a href="compare.html" class="active">Compare Stablecoins</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Compare Global Stablecoin Options</h2>
+                <p>Comprehensive comparison of major stablecoins across different blockchains</p>
+            </div>
+        </section>
+
+        <section class="comparison-section">
+            <div class="container">
+                <div class="filter-section">
+                    <h3>Filter by Type</h3>
+                    <div class="filter-group">
+                        <button class="filter-btn active" data-type="all">All Stablecoins</button>
+                        <button class="filter-btn" data-type="fiat">Fiat-Collateralized</button>
+                        <button class="filter-btn" data-type="crypto">Crypto-Collateralized</button>
+                        <button class="filter-btn" data-type="algorithmic">Algorithmic</button>
+                    </div>
+                </div>
+
+                <div class="view-toggle">
+                    <button class="view-btn active" id="grid-view">Grid View</button>
+                    <button class="view-btn" id="table-view">Table View</button>
+                </div>
+
+                <div class="comparison-grid" id="grid-container">
+                    <!-- USDT -->
+                    <div class="stablecoin-card" data-type="fiat">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3>Tether</h3>
+                                <span class="ticker">USDT</span>
+                            </div>
+                            <span class="type-badge fiat">Fiat-Backed</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Market Cap</span>
+                                <span class="info-value">$120B+</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Backing</span>
+                                <span class="info-value">USD Reserves</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Issuer</span>
+                                <span class="info-value">Tether Limited</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Audited</span>
+                                <span class="info-value">Attestations</span>
+                            </div>
+                        </div>
+                        <div class="chains">
+                            <h4>Available on:</h4>
+                            <div class="chain-tags">
+                                <span class="chain-tag">Ethereum</span>
+                                <span class="chain-tag">Tron</span>
+                                <span class="chain-tag">Solana</span>
+                                <span class="chain-tag">Avalanche</span>
+                                <span class="chain-tag">Polygon</span>
+                                <span class="chain-tag">Arbitrum</span>
+                                <span class="chain-tag">Optimism</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- USDC -->
+                    <div class="stablecoin-card" data-type="fiat">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3>USD Coin</h3>
+                                <span class="ticker">USDC</span>
+                            </div>
+                            <span class="type-badge fiat">Fiat-Backed</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Market Cap</span>
+                                <span class="info-value">$35B+</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Backing</span>
+                                <span class="info-value">USD & T-Bills</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Issuer</span>
+                                <span class="info-value">Circle</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Audited</span>
+                                <span class="info-value">Monthly Audits</span>
+                            </div>
+                        </div>
+                        <div class="chains">
+                            <h4>Available on:</h4>
+                            <div class="chain-tags">
+                                <span class="chain-tag">Ethereum</span>
+                                <span class="chain-tag">Solana</span>
+                                <span class="chain-tag">Avalanche</span>
+                                <span class="chain-tag">Polygon</span>
+                                <span class="chain-tag">Arbitrum</span>
+                                <span class="chain-tag">Optimism</span>
+                                <span class="chain-tag">Base</span>
+                                <span class="chain-tag">Stellar</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DAI -->
+                    <div class="stablecoin-card" data-type="crypto">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3>Dai</h3>
+                                <span class="ticker">DAI</span>
+                            </div>
+                            <span class="type-badge crypto">Crypto-Backed</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Market Cap</span>
+                                <span class="info-value">$5B+</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Backing</span>
+                                <span class="info-value">Crypto + RWAs</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Issuer</span>
+                                <span class="info-value">MakerDAO</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Decentralized</span>
+                                <span class="info-value">Yes</span>
+                            </div>
+                        </div>
+                        <div class="chains">
+                            <h4>Available on:</h4>
+                            <div class="chain-tags">
+                                <span class="chain-tag">Ethereum</span>
+                                <span class="chain-tag">Polygon</span>
+                                <span class="chain-tag">Arbitrum</span>
+                                <span class="chain-tag">Optimism</span>
+                                <span class="chain-tag">Base</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BUSD (historical) -->
+                    <div class="stablecoin-card" data-type="fiat">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3>First Digital USD</h3>
+                                <span class="ticker">FDUSD</span>
+                            </div>
+                            <span class="type-badge fiat">Fiat-Backed</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Market Cap</span>
+                                <span class="info-value">$3B+</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Backing</span>
+                                <span class="info-value">USD Reserves</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Issuer</span>
+                                <span class="info-value">FD121 Limited</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Audited</span>
+                                <span class="info-value">Regular Audits</span>
+                            </div>
+                        </div>
+                        <div class="chains">
+                            <h4>Available on:</h4>
+                            <div class="chain-tags">
+                                <span class="chain-tag">Ethereum</span>
+                                <span class="chain-tag">BNB Chain</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FRAX -->
+                    <div class="stablecoin-card" data-type="algorithmic">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3>Frax</h3>
+                                <span class="ticker">FRAX</span>
+                            </div>
+                            <span class="type-badge algorithmic">Hybrid</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Market Cap</span>
+                                <span class="info-value">$650M+</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Backing</span>
+                                <span class="info-value">Hybrid Model</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Issuer</span>
+                                <span class="info-value">Frax Finance</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Decentralized</span>
+                                <span class="info-value">Yes</span>
+                            </div>
+                        </div>
+                        <div class="chains">
+                            <h4>Available on:</h4>
+                            <div class="chain-tags">
+                                <span class="chain-tag">Ethereum</span>
+                                <span class="chain-tag">Arbitrum</span>
+                                <span class="chain-tag">Optimism</span>
+                                <span class="chain-tag">Polygon</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PYUSD -->
+                    <div class="stablecoin-card" data-type="fiat">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3>PayPal USD</h3>
+                                <span class="ticker">PYUSD</span>
+                            </div>
+                            <span class="type-badge fiat">Fiat-Backed</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Market Cap</span>
+                                <span class="info-value">$500M+</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Backing</span>
+                                <span class="info-value">USD Deposits</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Issuer</span>
+                                <span class="info-value">Paxos (for PayPal)</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Audited</span>
+                                <span class="info-value">Regular Audits</span>
+                            </div>
+                        </div>
+                        <div class="chains">
+                            <h4>Available on:</h4>
+                            <div class="chain-tags">
+                                <span class="chain-tag">Ethereum</span>
+                                <span class="chain-tag">Solana</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TUSD -->
+                    <div class="stablecoin-card" data-type="fiat">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3>TrueUSD</h3>
+                                <span class="ticker">TUSD</span>
+                            </div>
+                            <span class="type-badge fiat">Fiat-Backed</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Market Cap</span>
+                                <span class="info-value">$500M+</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Backing</span>
+                                <span class="info-value">USD Reserves</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Issuer</span>
+                                <span class="info-value">Techteryx</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Audited</span>
+                                <span class="info-value">Attestations</span>
+                            </div>
+                        </div>
+                        <div class="chains">
+                            <h4>Available on:</h4>
+                            <div class="chain-tags">
+                                <span class="chain-tag">Ethereum</span>
+                                <span class="chain-tag">Tron</span>
+                                <span class="chain-tag">Avalanche</span>
+                                <span class="chain-tag">BNB Chain</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- USDD -->
+                    <div class="stablecoin-card" data-type="algorithmic">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3>USDD</h3>
+                                <span class="ticker">USDD</span>
+                            </div>
+                            <span class="type-badge algorithmic">Algorithmic</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Market Cap</span>
+                                <span class="info-value">$730M+</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Backing</span>
+                                <span class="info-value">Over-Collateralized</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Issuer</span>
+                                <span class="info-value">TRON DAO</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Decentralized</span>
+                                <span class="info-value">Partial</span>
+                            </div>
+                        </div>
+                        <div class="chains">
+                            <h4>Available on:</h4>
+                            <div class="chain-tags">
+                                <span class="chain-tag">Tron</span>
+                                <span class="chain-tag">Ethereum</span>
+                                <span class="chain-tag">BNB Chain</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LUSD -->
+                    <div class="stablecoin-card" data-type="crypto">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3>Liquity USD</h3>
+                                <span class="ticker">LUSD</span>
+                            </div>
+                            <span class="type-badge crypto">Crypto-Backed</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Market Cap</span>
+                                <span class="info-value">$60M+</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Backing</span>
+                                <span class="info-value">ETH Only</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Issuer</span>
+                                <span class="info-value">Liquity Protocol</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Decentralized</span>
+                                <span class="info-value">Fully</span>
+                            </div>
+                        </div>
+                        <div class="chains">
+                            <h4>Available on:</h4>
+                            <div class="chain-tags">
+                                <span class="chain-tag">Ethereum</span>
+                                <span class="chain-tag">Arbitrum</span>
+                                <span class="chain-tag">Optimism</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- USDP -->
+                    <div class="stablecoin-card" data-type="fiat">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3>Pax Dollar</h3>
+                                <span class="ticker">USDP</span>
+                            </div>
+                            <span class="type-badge fiat">Fiat-Backed</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Market Cap</span>
+                                <span class="info-value">$300M+</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Backing</span>
+                                <span class="info-value">USD Deposits</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Issuer</span>
+                                <span class="info-value">Paxos</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Audited</span>
+                                <span class="info-value">Monthly Audits</span>
+                            </div>
+                        </div>
+                        <div class="chains">
+                            <h4>Available on:</h4>
+                            <div class="chain-tags">
+                                <span class="chain-tag">Ethereum</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GUSD -->
+                    <div class="stablecoin-card" data-type="fiat">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3>Gemini Dollar</h3>
+                                <span class="ticker">GUSD</span>
+                            </div>
+                            <span class="type-badge fiat">Fiat-Backed</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Market Cap</span>
+                                <span class="info-value">$300M+</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Backing</span>
+                                <span class="info-value">USD Deposits</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Issuer</span>
+                                <span class="info-value">Gemini</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Audited</span>
+                                <span class="info-value">Monthly Audits</span>
+                            </div>
+                        </div>
+                        <div class="chains">
+                            <h4>Available on:</h4>
+                            <div class="chain-tags">
+                                <span class="chain-tag">Ethereum</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- USDe -->
+                    <div class="stablecoin-card" data-type="crypto">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3>Ethena USD</h3>
+                                <span class="ticker">USDe</span>
+                            </div>
+                            <span class="type-badge crypto">Synthetic</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Market Cap</span>
+                                <span class="info-value">$3B+</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Backing</span>
+                                <span class="info-value">Delta-Neutral</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Issuer</span>
+                                <span class="info-value">Ethena Labs</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Decentralized</span>
+                                <span class="info-value">Partial</span>
+                            </div>
+                        </div>
+                        <div class="chains">
+                            <h4>Available on:</h4>
+                            <div class="chain-tags">
+                                <span class="chain-tag">Ethereum</span>
+                                <span class="chain-tag">Arbitrum</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container" id="table-container" style="display: none;">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Ticker</th>
+                                <th>Type</th>
+                                <th>Market Cap</th>
+                                <th>Backing</th>
+                                <th>Issuer</th>
+                                <th>Blockchain Support</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Tether</strong></td>
+                                <td>USDT</td>
+                                <td>Fiat-Backed</td>
+                                <td>$120B+</td>
+                                <td>USD Reserves</td>
+                                <td>Tether Limited</td>
+                                <td>7+ chains</td>
+                            </tr>
+                            <tr>
+                                <td><strong>USD Coin</strong></td>
+                                <td>USDC</td>
+                                <td>Fiat-Backed</td>
+                                <td>$35B+</td>
+                                <td>USD & T-Bills</td>
+                                <td>Circle</td>
+                                <td>8+ chains</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dai</strong></td>
+                                <td>DAI</td>
+                                <td>Crypto-Backed</td>
+                                <td>$5B+</td>
+                                <td>Crypto + RWAs</td>
+                                <td>MakerDAO</td>
+                                <td>5+ chains</td>
+                            </tr>
+                            <tr>
+                                <td><strong>First Digital USD</strong></td>
+                                <td>FDUSD</td>
+                                <td>Fiat-Backed</td>
+                                <td>$3B+</td>
+                                <td>USD Reserves</td>
+                                <td>FD121 Limited</td>
+                                <td>2 chains</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ethena USD</strong></td>
+                                <td>USDe</td>
+                                <td>Synthetic</td>
+                                <td>$3B+</td>
+                                <td>Delta-Neutral</td>
+                                <td>Ethena Labs</td>
+                                <td>2 chains</td>
+                            </tr>
+                            <tr>
+                                <td><strong>USDD</strong></td>
+                                <td>USDD</td>
+                                <td>Algorithmic</td>
+                                <td>$730M+</td>
+                                <td>Over-Collateralized</td>
+                                <td>TRON DAO</td>
+                                <td>3 chains</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Frax</strong></td>
+                                <td>FRAX</td>
+                                <td>Hybrid</td>
+                                <td>$650M+</td>
+                                <td>Hybrid Model</td>
+                                <td>Frax Finance</td>
+                                <td>4 chains</td>
+                            </tr>
+                            <tr>
+                                <td><strong>PayPal USD</strong></td>
+                                <td>PYUSD</td>
+                                <td>Fiat-Backed</td>
+                                <td>$500M+</td>
+                                <td>USD Deposits</td>
+                                <td>Paxos</td>
+                                <td>2 chains</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TrueUSD</strong></td>
+                                <td>TUSD</td>
+                                <td>Fiat-Backed</td>
+                                <td>$500M+</td>
+                                <td>USD Reserves</td>
+                                <td>Techteryx</td>
+                                <td>4 chains</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Pax Dollar</strong></td>
+                                <td>USDP</td>
+                                <td>Fiat-Backed</td>
+                                <td>$300M+</td>
+                                <td>USD Deposits</td>
+                                <td>Paxos</td>
+                                <td>Ethereum</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gemini Dollar</strong></td>
+                                <td>GUSD</td>
+                                <td>Fiat-Backed</td>
+                                <td>$300M+</td>
+                                <td>USD Deposits</td>
+                                <td>Gemini</td>
+                                <td>Ethereum</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Liquity USD</strong></td>
+                                <td>LUSD</td>
+                                <td>Crypto-Backed</td>
+                                <td>$60M+</td>
+                                <td>ETH Only</td>
+                                <td>Liquity Protocol</td>
+                                <td>3 chains</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 StablecoinHub. Educational resource for cryptocurrency research.</p>
+            <p class="disclaimer">Not financial advice. Always conduct your own research before making investment decisions.</p>
+        </div>
+    </footer>
+
+    <script src="js/compare.js"></script>
+</body>
+</html>
