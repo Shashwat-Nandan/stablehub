@@ -1,12 +1,40 @@
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+
+const subscribeToNewsletter = async (email) => {
+  const response = await fetch('http://localhost:3001/api/subscribe', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Failed to subscribe');
+  }
+
+  return response.json();
+};
 
 export default function Subscribe() {
   const [email, setEmail] = useState('');
 
+  const mutation = useMutation({
+    mutationFn: subscribeToNewsletter,
+    onSuccess: () => {
+      alert('Thanks for subscribing! You will receive our weekly newsletter.');
+      setEmail('');
+    },
+    onError: (error) => {
+      alert(error.message);
+    },
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`Thanks for subscribing with: ${email}`);
-    setEmail('');
+    mutation.mutate(email);
   };
 
   return (
@@ -24,7 +52,9 @@ export default function Subscribe() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <button type="submit" className="subscribe-btn">Subscribe</button>
+            <button type="submit" className="subscribe-btn" disabled={mutation.isPending}>
+              {mutation.isPending ? 'Subscribing...' : 'Subscribe'}
+            </button>
           </form>
           <p className="subscribe-note">Join 10,000+ readers staying ahead in blockchain finance</p>
         </div>

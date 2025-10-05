@@ -1,8 +1,59 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Subscribe from '../components/Subscribe';
-import { blogPosts } from '../data/blogPosts';
 
 export default function Home() {
+  const [blogPosts, setBlogPosts] = useState([]);
+
+  useEffect(() => {
+    const loadBlogPosts = async () => {
+      const blogIds = [
+        'ethereum-defi-stablecoins',
+        'arbitrum-optimism-scaling',
+        'polygon-traditional-finance',
+        'solana-high-performance',
+        'base-coinbase-onchain',
+        'avalanche-subnet-architecture',
+        'zksync-starknet-privacy',
+        'stellar-algorand-digital-assets',
+        'cross-chain-interoperability'
+      ];
+
+      const posts = await Promise.all(
+        blogIds.map(async (id) => {
+          try {
+            const response = await fetch(`/src/content/blog/${id}.md`);
+            const text = await response.text();
+
+            // Parse frontmatter
+            const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+            const match = text.match(frontmatterRegex);
+
+            if (match) {
+              const frontmatter = {};
+              const lines = match[1].split('\n');
+              lines.forEach(line => {
+                const [key, ...valueParts] = line.split(':');
+                if (key && valueParts.length) {
+                  frontmatter[key.trim()] = valueParts.join(':').trim().replace(/^['"]|['"]$/g, '');
+                }
+              });
+
+              return frontmatter;
+            }
+          } catch (error) {
+            console.error(`Error loading post ${id}:`, error);
+          }
+          return null;
+        })
+      );
+
+      setBlogPosts(posts.filter(Boolean));
+    };
+
+    loadBlogPosts();
+  }, []);
+
   return (
     <>
       <section className="hero">

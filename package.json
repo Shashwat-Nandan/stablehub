@@ -5,13 +5,24 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "server": "node server/api.js",
+    "server:prod": "pm2 start ecosystem.config.cjs",
+    "server:stop": "pm2 stop stablecoin-api",
+    "server:restart": "pm2 restart stablecoin-api",
+    "server:logs": "pm2 logs stablecoin-api",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.2",
+    "better-sqlite3": "^12.4.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "gray-matter": "^4.0.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.9.3"
   },
   "devDependencies": {
