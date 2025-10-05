@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 const subscribeToNewsletter = async (email) => {
-  const response = await fetch('http://localhost:3001/api/subscribe', {
+  const response = await fetch('/api/subscribe', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -11,8 +11,14 @@ const subscribeToNewsletter = async (email) => {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to subscribe');
+    let errorMessage = 'Failed to subscribe';
+    try {
+      const error = await response.json();
+      errorMessage = error.error || errorMessage;
+    } catch (e) {
+      // If parsing fails, use default message
+    }
+    throw new Error(errorMessage);
   }
 
   return response.json();
