@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import BlogPost from './pages/BlogPost';
 import Compare from './pages/Compare';
+import Admin from './pages/Admin';
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/blog/:id" element={<BlogPost />} />
             <Route path="/compare" element={<Compare />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </main>
         <Footer />
