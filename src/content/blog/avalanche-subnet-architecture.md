@@ -4,6 +4,7 @@ title: 'Avalanche: Subnet Architecture for Specialized Stablecoins'
 category: Layer-1
 date: October 2025
 excerpt: Avalanche's subnet architecture allows for the creation of customized blockchains optimized for specific use cases, including stablecoins with unique regulatory requirements or performance characteristics.
+titleImage: https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=600&fit=crop
 ---
 
 Avalanche's subnet architecture allows for the creation of customized blockchains optimized for specific use cases, including stablecoins with unique regulatory requirements or performance characteristics.

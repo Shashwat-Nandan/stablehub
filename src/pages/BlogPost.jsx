@@ -65,6 +65,11 @@ export default function BlogPost() {
       <section className="blog-section">
         <div className="container">
           <article className="blog-post">
+            {post.titleImage && (
+              <div className="title-image">
+                <img src={post.titleImage} alt={post.title} />
+              </div>
+            )}
             <div className="post-content">
               <ReactMarkdown>{post.content}</ReactMarkdown>
             </div>

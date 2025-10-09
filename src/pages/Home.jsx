@@ -70,13 +70,20 @@ export default function Home() {
           <div className="blog-list">
             {blogPosts.map((post) => (
               <Link key={post.id} to={`/blog/${post.id}`} className="blog-card">
-                <div className="post-header">
-                  <span className="category">{post.category}</span>
-                  <span className="date">{post.date}</span>
+                {post.titleImage && (
+                  <div className="blog-card-image">
+                    <img src={post.titleImage} alt={post.title} />
+                  </div>
+                )}
+                <div className="blog-card-content">
+                  <div className="post-header">
+                    <span className="category">{post.category}</span>
+                    <span className="date">{post.date}</span>
+                  </div>
+                  <h3>{post.title}</h3>
+                  <p className="blog-excerpt">{post.excerpt}</p>
+                  <span className="read-more">Read More</span>
                 </div>
-                <h3>{post.title}</h3>
-                <p className="blog-excerpt">{post.excerpt}</p>
-                <span className="read-more">Read More</span>
               </Link>
             ))}
           </div>

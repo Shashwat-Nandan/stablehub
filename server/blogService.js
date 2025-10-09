@@ -24,6 +24,7 @@ export const getAllBlogPosts = () => {
         category: data.category,
         date: data.date,
         excerpt: data.excerpt,
+        titleImage: data.titleImage,
         content: content
       };
     });
@@ -48,6 +49,7 @@ export const getBlogPostById = (id) => {
       category: data.category,
       date: data.date,
       excerpt: data.excerpt,
+      titleImage: data.titleImage,
       content: content
     };
   } catch (error) {

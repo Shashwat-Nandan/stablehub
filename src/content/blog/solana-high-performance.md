@@ -4,6 +4,7 @@ title: 'Solana: High-Performance Stablecoin Infrastructure'
 category: Layer-1
 date: October 2025
 excerpt: Solana's high-throughput architecture has made it a competitive platform for stablecoin transactions, particularly for applications requiring fast finality and low costs. Despite network challenges in its early years, Solana has emerged as a viable alternative to Ethereum for stablecoin deployment.
+titleImage: https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=1200&h=600&fit=crop
 ---
 
 Solana's high-throughput architecture has made it a competitive platform for stablecoin transactions, particularly for applications requiring fast finality and low costs. Despite network challenges in its early years, Solana has emerged as a viable alternative to Ethereum for stablecoin deployment.

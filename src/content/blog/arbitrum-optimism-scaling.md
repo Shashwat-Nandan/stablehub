@@ -4,6 +4,7 @@ title: 'Arbitrum & Optimism: Scaling Stablecoin Transactions'
 category: Layer-2
 date: October 2025
 excerpt: Optimistic rollups have emerged as critical infrastructure for stablecoin scalability. Arbitrum and Optimism offer significantly lower transaction fees while maintaining Ethereum's security guarantees, making them ideal for high-volume stablecoin transfers and DeFi operations.
+titleImage: https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1200&h=600&fit=crop
 ---
 
 Optimistic rollups have emerged as critical infrastructure for stablecoin scalability. Arbitrum and Optimism offer significantly lower transaction fees while maintaining Ethereum's security guarantees, making them ideal for high-volume stablecoin transfers and DeFi operations.

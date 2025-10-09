@@ -4,6 +4,7 @@ title: 'Stellar & Algorand: Purpose-Built for Digital Assets'
 category: Layer-1
 date: October 2025
 excerpt: While newer L1s have captured attention, Stellar and Algorand continue to develop purpose-built infrastructure for stablecoins and digital assets, with particular focus on cross-border payments and financial inclusion.
+titleImage: https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=1200&h=600&fit=crop
 ---
 
 While newer L1s have captured attention, Stellar and Algorand continue to develop purpose-built infrastructure for stablecoins and digital assets, with particular focus on cross-border payments and financial inclusion.
