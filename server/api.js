@@ -1,17 +1,61 @@
 import express from 'express';
 import cors from 'cors';
-import { addSubscriber, getAllSubscribers } from './db.js';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import { initDatabase, subscriberDb } from './database.js';
 import { sendBlogPostToSubscribers } from './email.js';
 import { getAllBlogPosts, getBlogPostById, getLatestBlogPost } from './blogService.js';
+import authRoutes from './routes/auth.js';
+import blogRoutes from './routes/blog.js';
+import newsletterRoutes from './routes/newsletter.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
-app.use(cors());
+// Initialize database
+initDatabase();
+
+// CORS configuration for remote access
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    // Allow all origins in development, or specific origin in production
+    const allowedOrigins = process.env.ALLOWED_ORIGINS
+      ? process.env.ALLOWED_ORIGINS.split(',')
+      : ['http://localhost:5173', 'http://localhost:3001'];
+
+    // In production, you might want to be more restrictive
+    // For now, allow all origins for remote access
+    return callback(null, true);
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(express.json());
 
-// Subscribe endpoint
+// Serve static files from React app
+app.use(express.static(join(__dirname, '../dist')));
+
+// Mount API routes
+app.use('/api/auth', authRoutes);
+app.use('/api/blog', blogRoutes);
+app.use('/api/newsletter', newsletterRoutes);
+
+// Legacy subscribe endpoint (kept for backwards compatibility)
 app.post('/api/subscribe', async (req, res) => {
   try {
     const { email } = req.body;
@@ -20,24 +64,25 @@ app.post('/api/subscribe', async (req, res) => {
       return res.status(400).json({ error: 'Email is required' });
     }
 
-    const result = addSubscriber(email);
+    const result = subscriberDb.create(email);
+    if (result === null) {
+      return res.status(409).json({ error: 'Email already subscribed' });
+    }
+
     res.json({
       success: true,
       message: 'Successfully subscribed!',
-      id: result.lastInsertRowid
+      id: result
     });
   } catch (error) {
-    if (error.message.includes('UNIQUE constraint failed')) {
-      return res.status(409).json({ error: 'Email already subscribed' });
-    }
     res.status(500).json({ error: 'Failed to subscribe' });
   }
 });
 
-// Get all subscribers endpoint
+// Legacy get all subscribers endpoint (kept for backwards compatibility)
 app.get('/api/subscribers', (req, res) => {
   try {
-    const subscribers = getAllSubscribers();
+    const subscribers = subscriberDb.getAll();
     res.json({ subscribers });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch subscribers' });
@@ -87,7 +132,7 @@ app.post('/api/send-latest-blog', async (req, res) => {
     }
 
     // Get all subscribers
-    const subscribers = getAllSubscribers();
+    const subscribers = subscriberDb.getAll();
 
     if (subscribers.length === 0) {
       return res.json({
@@ -144,6 +189,20 @@ app.post('/api/test-email', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`API server running on http://localhost:${PORT} in ${NODE_ENV} mode`);
+// Fallback route - serve React app for all non-API routes
+// This must be AFTER all API routes
+app.use((req, res, next) => {
+  // If it's not an API route, serve the React app
+  if (!req.path.startsWith('/api')) {
+    res.sendFile(join(__dirname, '../dist/index.html'));
+  } else {
+    next();
+  }
+});
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`API server running on http://0.0.0.0:${PORT} in ${NODE_ENV} mode`);
+  console.log(`Server accessible at:`);
+  console.log(`  - Local: http://localhost:${PORT}`);
+  console.log(`  - Network: http://37.60.249.62:${PORT}`);
 });

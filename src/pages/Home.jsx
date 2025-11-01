@@ -1,54 +1,26 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Subscribe from '../components/Subscribe';
+import { API_URL } from '../config';
 
 export default function Home() {
   const [blogPosts, setBlogPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadBlogPosts = async () => {
-      const blogIds = [
-        'ethereum-defi-stablecoins',
-        'arbitrum-optimism-scaling',
-        'polygon-traditional-finance',
-        'solana-high-performance',
-        'base-coinbase-onchain',
-        'avalanche-subnet-architecture',
-        'zksync-starknet-privacy',
-        'stellar-algorand-digital-assets',
-        'cross-chain-interoperability'
-      ];
+      try {
+        const response = await fetch(`${API_URL}/api/blog/posts`);
+        const data = await response.json();
 
-      const posts = await Promise.all(
-        blogIds.map(async (id) => {
-          try {
-            const response = await fetch(`/src/content/blog/${id}.md`);
-            const text = await response.text();
-
-            // Parse frontmatter
-            const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
-            const match = text.match(frontmatterRegex);
-
-            if (match) {
-              const frontmatter = {};
-              const lines = match[1].split('\n');
-              lines.forEach(line => {
-                const [key, ...valueParts] = line.split(':');
-                if (key && valueParts.length) {
-                  frontmatter[key.trim()] = valueParts.join(':').trim().replace(/^['"]|['"]$/g, '');
-                }
-              });
-
-              return frontmatter;
-            }
-          } catch (error) {
-            console.error(`Error loading post ${id}:`, error);
-          }
-          return null;
-        })
-      );
-
-      setBlogPosts(posts.filter(Boolean));
+        if (data.success && data.posts) {
+          setBlogPosts(data.posts);
+        }
+      } catch (error) {
+        console.error('Error loading blog posts:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     loadBlogPosts();
@@ -67,26 +39,43 @@ export default function Home() {
 
       <section className="blog-section">
         <div className="container">
-          <div className="blog-list">
-            {blogPosts.map((post) => (
-              <Link key={post.id} to={`/blog/${post.id}`} className="blog-card">
-                {post.titleImage && (
-                  <div className="blog-card-image">
-                    <img src={post.titleImage} alt={post.title} />
-                  </div>
-                )}
-                <div className="blog-card-content">
-                  <div className="post-header">
-                    <span className="category">{post.category}</span>
-                    <span className="date">{post.date}</span>
-                  </div>
-                  <h3>{post.title}</h3>
-                  <p className="blog-excerpt">{post.excerpt}</p>
-                  <span className="read-more">Read More</span>
-                </div>
-              </Link>
-            ))}
-          </div>
+          {loading ? (
+            <p style={{ textAlign: 'center', padding: '2rem' }}>Loading blog posts...</p>
+          ) : blogPosts.length === 0 ? (
+            <p style={{ textAlign: 'center', padding: '2rem' }}>No blog posts available yet.</p>
+          ) : (
+            <div className="blog-list">
+              {blogPosts.map((post) => {
+                // Extract image from content if exists
+                const imgMatch = post.content.match(/<img[^>]+src="([^">]+)"/);
+                const titleImage = imgMatch ? imgMatch[1] : null;
+
+                // Extract excerpt from content (first paragraph)
+                const contentWithoutImg = post.content.replace(/<div[^>]*>[\s\S]*?<\/div>/, '');
+                const firstPMatch = contentWithoutImg.match(/<p>(.*?)<\/p>/);
+                const excerpt = firstPMatch ? firstPMatch[1].substring(0, 150) + '...' : '';
+
+                return (
+                  <Link key={post.id} to={`/blog/${post.id}`} className="blog-card">
+                    {titleImage && (
+                      <div className="blog-card-image">
+                        <img src={titleImage} alt={post.title} />
+                      </div>
+                    )}
+                    <div className="blog-card-content">
+                      <div className="post-header">
+                        <span className="category">{post.category}</span>
+                        <span className="date">{post.date_display || new Date(post.created_at).toLocaleDateString()}</span>
+                      </div>
+                      <h3>{post.title}</h3>
+                      <p className="blog-excerpt">{excerpt}</p>
+                      <span className="read-more">Read More</span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
     </>
