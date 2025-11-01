@@ -6,6 +6,7 @@ const cors = require('cors');
 
 const authRoutes = require('./backend/routes/auth');
 const blogRoutes = require('./backend/routes/blog');
+const newsletterRoutes = require('./backend/routes/newsletter');
 const { initDatabase } = require('./backend/db/database');
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(cookieParser());
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/blog', blogRoutes);
+app.use('/api/newsletter', newsletterRoutes);
 
 // Serve static files (CSS, JS, images)
 app.use('/css', express.static(path.join(__dirname, 'css')));

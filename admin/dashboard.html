@@ -24,6 +24,8 @@
                 <nav class="admin-nav">
                     <a href="#" class="nav-item active" data-view="posts">Blog Posts</a>
                     <a href="#" class="nav-item" data-view="new-post">New Post</a>
+                    <a href="#" class="nav-item" data-view="newsletter">Newsletter</a>
+                    <a href="#" class="nav-item" data-view="subscribers">Subscribers</a>
                 </nav>
             </div>
 
@@ -91,8 +93,86 @@
                         </div>
                     </form>
                 </div>
+
+                <!-- Newsletter View -->
+                <div id="newsletterView" class="view">
+                    <div class="view-header">
+                        <h2>Send Newsletter</h2>
+                        <button class="btn btn-secondary" id="viewHistoryBtn">View History</button>
+                    </div>
+
+                    <div class="stats-row">
+                        <div class="stat-card">
+                            <div class="stat-label">Active Subscribers</div>
+                            <div class="stat-value" id="subscriberCount">-</div>
+                        </div>
+                    </div>
+
+                    <form id="newsletterForm" class="post-form">
+                        <div class="form-group">
+                            <label for="newsletterSubject">Subject *</label>
+                            <input type="text" id="newsletterSubject" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newsletterContent">Content (HTML supported) *</label>
+                            <textarea id="newsletterContent" rows="15" required placeholder="Enter your newsletter content. HTML tags are supported for formatting."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="testModeCheck">
+                                Test Mode (send to test email only)
+                            </label>
+                        </div>
+
+                        <div class="form-group" id="testEmailGroup" style="display: none;">
+                            <label for="testEmail">Test Email Address</label>
+                            <input type="email" id="testEmail" placeholder="test@example.com">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success" id="sendNewsletterBtn">Send Newsletter</button>
+                            <button type="button" class="btn btn-secondary" id="previewNewsletterBtn">Preview</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Subscribers View -->
+                <div id="subscribersView" class="view">
+                    <div class="view-header">
+                        <h2>Newsletter Subscribers</h2>
+                        <button class="btn btn-primary" id="addSubscriberBtn">Add Subscriber</button>
+                    </div>
+
+                    <div class="stats-row">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Subscribers</div>
+                            <div class="stat-value" id="totalSubscribers">-</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Active Subscribers</div>
+                            <div class="stat-value" id="activeSubscribers">-</div>
+                        </div>
+                    </div>
+
+                    <div id="subscribersContainer" class="subscribers-container">
+                        <p class="loading">Loading subscribers...</p>
+                    </div>
+                </div>
             </div>
         </main>
+    </div>
+
+    <!-- Modal for Preview -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Newsletter Preview</h3>
+                <span class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body" id="previewContent"></div>
+        </div>
     </div>
 
     <script src="/admin/dashboard.js"></script>

@@ -295,3 +295,273 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
+
+// ===== NEWSLETTER FUNCTIONALITY =====
+
+let allSubscribers = [];
+
+// Load subscriber count
+async function loadSubscriberCount() {
+    try {
+        const response = await fetch('/api/newsletter/subscribers');
+        const data = await response.json();
+        if (data.success) {
+            const count = data.activeCount || 0;
+            const countElement = document.getElementById('subscriberCount');
+            if (countElement) {
+                countElement.textContent = count;
+            }
+        }
+    } catch (error) {
+        console.error('Error loading subscriber count:', error);
+    }
+}
+
+// Load all subscribers
+async function loadSubscribers() {
+    try {
+        const response = await fetch('/api/newsletter/subscribers');
+        const data = await response.json();
+
+        if (data.success) {
+            allSubscribers = data.subscribers;
+            renderSubscribers();
+
+            // Update stats
+            document.getElementById('totalSubscribers').textContent = allSubscribers.length;
+            document.getElementById('activeSubscribers').textContent = data.activeCount || 0;
+        }
+    } catch (error) {
+        console.error('Error loading subscribers:', error);
+        document.getElementById('subscribersContainer').innerHTML = '<p class="empty-state">Error loading subscribers</p>';
+    }
+}
+
+// Render subscribers
+function renderSubscribers() {
+    const container = document.getElementById('subscribersContainer');
+
+    if (allSubscribers.length === 0) {
+        container.innerHTML = '<p class="empty-state">No subscribers yet</p>';
+        return;
+    }
+
+    container.innerHTML = allSubscribers.map(sub => `
+        <div class="subscriber-item">
+            <div class="subscriber-info">
+                <div class="subscriber-email">${escapeHtml(sub.email)}</div>
+                ${sub.name ? `<div class="subscriber-name">${escapeHtml(sub.name)}</div>` : ''}
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span class="subscriber-date">${new Date(sub.subscribed_at).toLocaleDateString()}</span>
+                <span class="subscriber-status ${sub.is_active ? 'active' : 'inactive'}">
+                    ${sub.is_active ? 'Active' : 'Inactive'}
+                </span>
+                <div class="subscriber-actions">
+                    <button class="btn btn-small btn-secondary" onclick="toggleSubscriber(${sub.id}, ${!sub.is_active})">
+                        ${sub.is_active ? 'Deactivate' : 'Activate'}
+                    </button>
+                    <button class="btn btn-small btn-danger" onclick="deleteSubscriber(${sub.id})">Delete</button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Toggle subscriber status
+async function toggleSubscriber(id, isActive) {
+    try {
+        const response = await fetch(`/api/newsletter/subscribers/${id}/toggle`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ isActive })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+            await loadSubscribers();
+        } else {
+            alert('Error updating subscriber: ' + (data.error || 'Unknown error'));
+        }
+    } catch (error) {
+        console.error('Error toggling subscriber:', error);
+        alert('Error updating subscriber');
+    }
+}
+
+// Delete subscriber
+async function deleteSubscriber(id) {
+    if (!confirm('Are you sure you want to delete this subscriber?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/newsletter/subscribers/${id}`, {
+            method: 'DELETE'
+        });
+
+        const data = await response.json();
+        if (data.success) {
+            await loadSubscribers();
+        } else {
+            alert('Error deleting subscriber: ' + (data.error || 'Unknown error'));
+        }
+    } catch (error) {
+        console.error('Error deleting subscriber:', error);
+        alert('Error deleting subscriber');
+    }
+}
+
+// Send newsletter
+async function sendNewsletter(event) {
+    event.preventDefault();
+
+    const subject = document.getElementById('newsletterSubject').value.trim();
+    const content = document.getElementById('newsletterContent').value.trim();
+    const testMode = document.getElementById('testModeCheck').checked;
+    const testEmail = document.getElementById('testEmail').value.trim();
+
+    if (!subject || !content) {
+        alert('Please fill in all required fields');
+        return;
+    }
+
+    if (testMode && !testEmail) {
+        alert('Please enter a test email address');
+        return;
+    }
+
+    const confirmMsg = testMode
+        ? `Send test newsletter to ${testEmail}?`
+        : `Send newsletter to all active subscribers?`;
+
+    if (!confirm(confirmMsg)) {
+        return;
+    }
+
+    const sendBtn = document.getElementById('sendNewsletterBtn');
+    const originalText = sendBtn.textContent;
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Sending...';
+
+    try {
+        const response = await fetch('/api/newsletter/send', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                subject,
+                content,
+                testMode,
+                testEmail: testMode ? testEmail : null
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert(data.message);
+            document.getElementById('newsletterForm').reset();
+            document.getElementById('testEmailGroup').style.display = 'none';
+        } else {
+            alert('Error sending newsletter: ' + (data.error || 'Unknown error'));
+        }
+    } catch (error) {
+        console.error('Error sending newsletter:', error);
+        alert('Error sending newsletter');
+    } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = originalText;
+    }
+}
+
+// Preview newsletter
+function previewNewsletter() {
+    const subject = document.getElementById('newsletterSubject').value.trim();
+    const content = document.getElementById('newsletterContent').value.trim();
+
+    if (!subject || !content) {
+        alert('Please enter subject and content first');
+        return;
+    }
+
+    const modal = document.getElementById('previewModal');
+    const previewContent = document.getElementById('previewContent');
+
+    previewContent.innerHTML = `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <div style="background: #2563eb; color: white; padding: 20px; text-align: center;">
+                <h1 style="margin: 0;">StableHub Newsletter</h1>
+            </div>
+            <div style="padding: 20px; background: #f8fafc;">
+                <h2 style="color: #333;">${escapeHtml(subject)}</h2>
+                <div>${content}</div>
+            </div>
+            <div style="padding: 20px; text-align: center; color: #666; font-size: 12px;">
+                <p>You're receiving this email because you subscribed to StableHub newsletter.</p>
+            </div>
+        </div>
+    `;
+
+    modal.classList.add('show');
+}
+
+// Setup newsletter event listeners
+function setupNewsletterListeners() {
+    // Test mode checkbox
+    const testModeCheck = document.getElementById('testModeCheck');
+    if (testModeCheck) {
+        testModeCheck.addEventListener('change', (e) => {
+            document.getElementById('testEmailGroup').style.display = e.target.checked ? 'block' : 'none';
+        });
+    }
+
+    // Newsletter form
+    const newsletterForm = document.getElementById('newsletterForm');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', sendNewsletter);
+    }
+
+    // Preview button
+    const previewBtn = document.getElementById('previewNewsletterBtn');
+    if (previewBtn) {
+        previewBtn.addEventListener('click', previewNewsletter);
+    }
+
+    // Modal close
+    const modal = document.getElementById('previewModal');
+    const closeBtn = modal.querySelector('.modal-close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+    }
+
+    // Close modal on outside click
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('show');
+        }
+    });
+}
+
+// Update switchView to handle newsletter views
+const originalSwitchView = switchView;
+switchView = function(view) {
+    originalSwitchView(view);
+
+    // Load data when switching to newsletter/subscriber views
+    if (view === 'newsletter') {
+        loadSubscriberCount();
+    } else if (view === 'subscribers') {
+        loadSubscribers();
+    }
+};
+
+// Initialize newsletter features
+document.addEventListener('DOMContentLoaded', () => {
+    setupNewsletterListeners();
+});
