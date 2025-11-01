@@ -41,12 +41,25 @@ The server will start on `http://localhost:8000`
    - **Username**: `admin`
    - **Password**: `admin123`
 3. You'll be redirected to the admin dashboard where you can:
-   - Create new blog posts
-   - Edit existing posts
-   - Publish or unpublish posts
-   - Delete posts
+   - **Blog Posts**: Create, edit, publish/unpublish, and delete blog posts
+   - **Newsletter**: Compose and send newsletters to subscribers
+   - **Subscribers**: Manage newsletter subscribers (view, activate/deactivate, delete)
 
 **IMPORTANT**: Change the default admin password in production!
+
+### Newsletter Configuration
+
+The newsletter feature uses Nodemailer for sending emails. Configure SMTP settings via environment variables:
+
+```bash
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=your-email@example.com
+SMTP_PASS=your-password
+SMTP_FROM=newsletter@stablehub.com
+```
+
+If no SMTP settings are configured, emails will be logged to the console (useful for testing).
 
 ## Project Structure
 
@@ -93,19 +106,33 @@ stablehub/
 
 ### Public Endpoints
 
+**Blog:**
 - `GET /api/blog/posts` - Get all published blog posts
 - `GET /api/blog/posts/:id` - Get a specific blog post by ID
 
+**Newsletter:**
+- `POST /api/newsletter/subscribe` - Subscribe to newsletter (email, name optional)
+
 ### Admin Endpoints (Requires Authentication)
 
+**Authentication:**
 - `POST /api/auth/login` - Login with username and password
 - `POST /api/auth/logout` - Logout and clear token
 - `GET /api/auth/verify` - Verify authentication token
+
+**Blog Management:**
 - `GET /api/blog/posts/all` - Get all posts (including drafts)
 - `POST /api/blog/posts` - Create a new blog post
 - `PUT /api/blog/posts/:id` - Update a blog post
 - `DELETE /api/blog/posts/:id` - Delete a blog post
 - `PATCH /api/blog/posts/:id/status` - Update post status (publish/unpublish)
+
+**Newsletter Management:**
+- `GET /api/newsletter/subscribers` - Get all subscribers with stats
+- `DELETE /api/newsletter/subscribers/:id` - Delete a subscriber
+- `PATCH /api/newsletter/subscribers/:id/toggle` - Activate/deactivate subscriber
+- `POST /api/newsletter/send` - Send newsletter (supports test mode)
+- `GET /api/newsletter/history` - View sent newsletters
 
 ## Security Features
 
