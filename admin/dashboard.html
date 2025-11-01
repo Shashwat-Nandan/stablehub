@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - StableHub</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/admin/dashboard.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <div class="admin-header-content">
+                <h1>Admin Dashboard</h1>
+                <div class="admin-actions">
+                    <span id="adminUsername" class="admin-username"></span>
+                    <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="admin-main">
+            <div class="admin-sidebar">
+                <nav class="admin-nav">
+                    <a href="#" class="nav-item active" data-view="posts">Blog Posts</a>
+                    <a href="#" class="nav-item" data-view="new-post">New Post</a>
+                </nav>
+            </div>
+
+            <div class="admin-content">
+                <!-- Posts List View -->
+                <div id="postsView" class="view active">
+                    <div class="view-header">
+                        <h2>Blog Posts</h2>
+                        <button class="btn btn-primary" id="newPostBtn">Create New Post</button>
+                    </div>
+
+                    <div class="posts-filter">
+                        <button class="filter-btn active" data-status="all">All</button>
+                        <button class="filter-btn" data-status="published">Published</button>
+                        <button class="filter-btn" data-status="draft">Drafts</button>
+                    </div>
+
+                    <div id="postsContainer" class="posts-container">
+                        <p class="loading">Loading posts...</p>
+                    </div>
+                </div>
+
+                <!-- New/Edit Post View -->
+                <div id="editorView" class="view">
+                    <div class="view-header">
+                        <h2 id="editorTitle">New Blog Post</h2>
+                        <button class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
+                    </div>
+
+                    <form id="postForm" class="post-form">
+                        <input type="hidden" id="postId">
+
+                        <div class="form-group">
+                            <label for="postTitle">Title *</label>
+                            <input type="text" id="postTitle" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="postCategory">Category *</label>
+                                <select id="postCategory" required>
+                                    <option value="">Select category</option>
+                                    <option value="Layer-1">Layer-1</option>
+                                    <option value="Layer-2">Layer-2</option>
+                                    <option value="Emerging Tech">Emerging Tech</option>
+                                    <option value="Stablecoins">Stablecoins</option>
+                                    <option value="DeFi">DeFi</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="postDate">Display Date</label>
+                                <input type="text" id="postDate" placeholder="e.g., October 2025">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="postContent">Content *</label>
+                            <textarea id="postContent" rows="15" required></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" data-status="draft">Save as Draft</button>
+                            <button type="submit" class="btn btn-success" data-status="published">Publish</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/admin/dashboard.js"></script>
+</body>
+</html>

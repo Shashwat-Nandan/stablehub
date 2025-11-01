@@ -4,7 +4,9 @@ A comprehensive website for comparing global stablecoin options and exploring La
 
 ## Features
 
-- **Blog Section**: In-depth articles about different L1 and L2 blockchain solutions including Ethereum, Solana, Arbitrum, Optimism, Polygon, Base, zkSync, StarkNet, Avalanche, Stellar, and Algorand
+- **Dynamic Blog System**: In-depth articles about different L1 and L2 blockchain solutions including Ethereum, Solana, Arbitrum, Optimism, Polygon, Base, zkSync, StarkNet, Avalanche, Stellar, and Algorand
+- **Admin Dashboard**: Secure admin panel for creating, editing, and publishing blog posts
+- **JWT Authentication**: Protected admin routes with token-based authentication
 - **Comparison Tool**: Compare major stablecoins including USDT, USDC, DAI, PYUSD, FRAX, and more
 - **Filter Options**: Filter stablecoins by type (fiat-backed, crypto-backed, algorithmic)
 - **Multiple Views**: Toggle between grid and table views for comparison
@@ -12,40 +14,68 @@ A comprehensive website for comparing global stablecoin options and exploring La
 
 ## Running the Website
 
-### Option 1: Using Python (Recommended)
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm (comes with Node.js)
+
+### Installation
 
 ```bash
-cd stablecoin-website
+cd stablehub
+npm install
+```
+
+### Starting the Server
+
+```bash
 npm start
-# or
-python3 -m http.server 8000
 ```
 
-Then open your browser to `http://localhost:8000`
+The server will start on `http://localhost:8000`
 
-### Option 2: Using Node.js http-server
+### Admin Access
 
-```bash
-cd stablecoin-website
-npx http-server -p 8000
-```
+1. Navigate to `http://localhost:8000/admin/login`
+2. Login with default credentials:
+   - **Username**: `admin`
+   - **Password**: `admin123`
+3. You'll be redirected to the admin dashboard where you can:
+   - Create new blog posts
+   - Edit existing posts
+   - Publish or unpublish posts
+   - Delete posts
 
-### Option 3: Open directly in browser
-
-Simply open `index.html` in your web browser.
+**IMPORTANT**: Change the default admin password in production!
 
 ## Project Structure
 
 ```
-stablecoin-website/
-├── index.html          # Main blog page with L1/L2 content
-├── compare.html        # Stablecoin comparison page
+stablehub/
+├── index.html              # Main blog page (dynamic content)
+├── compare.html            # Stablecoin comparison page
+├── server.js               # Express server and API routes
+├── migrate-posts.js        # Database migration script
+├── package.json            # Project metadata and dependencies
+├── stablehub.db            # SQLite database (auto-generated)
+├── backend/
+│   ├── db/
+│   │   └── database.js     # Database schema and operations
+│   ├── routes/
+│   │   ├── auth.js         # Authentication endpoints
+│   │   └── blog.js         # Blog CRUD endpoints
+│   └── middleware/
+│       └── auth.js         # JWT authentication middleware
+├── admin/
+│   ├── login.html          # Admin login page
+│   ├── dashboard.html      # Admin dashboard
+│   ├── dashboard.css       # Admin dashboard styles
+│   └── dashboard.js        # Admin dashboard logic
 ├── css/
-│   └── style.css       # Styling for all pages
+│   └── style.css           # Main site styling
 ├── js/
-│   └── compare.js      # Interactive filtering and view toggle
-├── package.json        # Project metadata
-└── README.md          # This file
+│   └── compare.js          # Comparison page filtering
+└── README.md               # This file
 ```
 
 ## Stablecoins Covered
@@ -58,6 +88,39 @@ stablecoin-website/
 
 - **Layer-1**: Ethereum, Solana, Avalanche, Stellar, Algorand
 - **Layer-2**: Arbitrum, Optimism, Polygon, Base, zkSync, StarkNet
+
+## API Endpoints
+
+### Public Endpoints
+
+- `GET /api/blog/posts` - Get all published blog posts
+- `GET /api/blog/posts/:id` - Get a specific blog post by ID
+
+### Admin Endpoints (Requires Authentication)
+
+- `POST /api/auth/login` - Login with username and password
+- `POST /api/auth/logout` - Logout and clear token
+- `GET /api/auth/verify` - Verify authentication token
+- `GET /api/blog/posts/all` - Get all posts (including drafts)
+- `POST /api/blog/posts` - Create a new blog post
+- `PUT /api/blog/posts/:id` - Update a blog post
+- `DELETE /api/blog/posts/:id` - Delete a blog post
+- `PATCH /api/blog/posts/:id/status` - Update post status (publish/unpublish)
+
+## Security Features
+
+- JWT-based authentication with HTTP-only cookies
+- bcrypt password hashing
+- Protected admin routes with authentication middleware
+- XSS protection with HTML escaping
+- CORS configuration for API security
+
+## Database
+
+- SQLite database for lightweight data storage
+- Automatic database initialization on first run
+- Blog posts with status tracking (draft/published)
+- User management for admin authentication
 
 ## Educational Purpose
 
