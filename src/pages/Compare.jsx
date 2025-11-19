@@ -12,8 +12,8 @@ export default function Compare() {
     <>
       <section className="hero">
         <div className="container">
-          <h2>Compare Global Stablecoin Options</h2>
-          <p>Comprehensive comparison of major stablecoins across different blockchains</p>
+          <h2>Payment Infrastructure Solutions</h2>
+          <p>Choose the right stablecoin infrastructure for your international trade and procurement needs</p>
         </div>
       </section>
 

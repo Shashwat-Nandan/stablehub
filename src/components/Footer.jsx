@@ -2,8 +2,8 @@ export default function Footer() {
   return (
     <footer>
       <div className="container">
-        <p>&copy; 2025 StablecoinHub. Educational resource for cryptocurrency research.</p>
-        <p className="disclaimer">Not financial advice. Always conduct your own research before making investment decisions.</p>
+        <p>&copy; 2025 Laminar Finance. Blockchain solutions for enterprise trade finance.</p>
+        <p className="disclaimer">Empowering global businesses with secure, transparent, and efficient international payment infrastructure.</p>
       </div>
     </footer>
   );

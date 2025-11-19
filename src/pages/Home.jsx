@@ -30,8 +30,8 @@ export default function Home() {
     <>
       <section className="hero">
         <div className="container">
-          <h2>Making Blockchain Finance Simple</h2>
-          <p>Your daily dose of stablecoin insights and L1/L2 blockchain news</p>
+          <h2>Streamline Global Trade with Blockchain</h2>
+          <p>Enterprise-grade blockchain solutions for international procurement, import/export, and cross-border payments</p>
         </div>
       </section>
 

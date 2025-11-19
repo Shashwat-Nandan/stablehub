@@ -45,7 +45,7 @@ export default function Header() {
       <nav className="navbar">
         <div className="container">
           <div className="logo">
-            <h1>StablecoinHub</h1>
+            <h1>Laminar Finance</h1>
           </div>
 
           <button
@@ -68,7 +68,7 @@ export default function Header() {
                 className={location.pathname === '/' ? 'active' : ''}
                 onClick={closeMobileMenu}
               >
-                Blog
+                Insights
               </Link>
             </li>
             <li>
@@ -77,7 +77,7 @@ export default function Header() {
                 className={location.pathname === '/compare' ? 'active' : ''}
                 onClick={closeMobileMenu}
               >
-                Compare Stablecoins
+                Solutions
               </Link>
             </li>
             <li>

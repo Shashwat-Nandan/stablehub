@@ -47,22 +47,22 @@ export default function Subscribe() {
     <section className="subscribe-section">
       <div className="container">
         <div className="subscribe-content">
-          <h2>Subscribe to Our Newsletter</h2>
-          <p>Get the latest stablecoin insights and blockchain updates delivered to your inbox every week</p>
+          <h2>Stay Informed on Trade Finance Innovation</h2>
+          <p>Get the latest insights on blockchain-powered international payments and procurement solutions</p>
           <form className="subscribe-form" onSubmit={handleSubmit}>
             <input
               type="email"
               className="subscribe-input"
-              placeholder="Enter your email address"
+              placeholder="Enter your business email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
             <button type="submit" className="subscribe-btn" disabled={mutation.isPending}>
-              {mutation.isPending ? 'Subscribing...' : 'Subscribe'}
+              {mutation.isPending ? 'Subscribing...' : 'Get Updates'}
             </button>
           </form>
-          <p className="subscribe-note">Join 10,000+ readers staying ahead in blockchain finance</p>
+          <p className="subscribe-note">Join enterprise leaders transforming global trade with blockchain</p>
         </div>
       </div>
     </section>
